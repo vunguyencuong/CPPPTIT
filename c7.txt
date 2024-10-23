@@ -1,0 +1,260 @@
+// ==UserScript==
+// @name         paste dap an
+// @namespace    http://tampermonkey.net/
+// @version      0.1
+// @description  siuuuuuuuuuuuu
+// @author       Quandang
+// @match        https://drnguyentt.com/*
+// @icon         https://www.google.com/s2/favicons?sz=64&domain=drnguyentt.com
+// @grant        none
+// @run-at document-idle
+// ==/UserScript==
+
+const questionAnswerPairs = [
+  {
+    "question": "How does the Histogram of Oriented Gradients (HOG) contribute to image feature extraction?",
+    "answer": "Capturing shape information"
+  },
+  {
+    "question": "Which feature extraction method is suitable for recognizing objects in different scales and orientations?",
+    "answer": "Scale-Invariant Feature Transform (SIFT)"
+  },
+  {
+    "question": "In image processing, what does the background refer to?",
+    "answer": "Unwanted information"
+  },
+  {
+    "question": "",
+    "answer": "Insensitivity to object boundaries"
+  },
+  {
+    "question": "Cho ảnh I(i,j) với i,j=0..8 như sau:\n\n1\t2\t3\t4\t5\t6\t7\t8\t9\n2\t3\t4\t5\t6\t7\t8\t9\t10\n3\t4\t5\t6\t7\t8\t9\t10\t11\n4\t5\t6\t7\t8\t9\t10\t11\t12\n5\t6\t7\t8\t9\t10\t11\t12\t13\n6\t7\t8\t9\t10\t11\t12\t13\t14\n7\t8\t9\t10\t11\t12\t13\t14\t15\n8\t9\t10\t11\t12\t13\t14\t15\t16\n9\t10\t11\t12\t13\t14\t15\t16\t17\n\nvà cửa sổ lọc w(i,j) với i,j=0..2 như sau:\n\n\n1/9\t2/9\t1/9\n2/9\t4/9\t2/9\n1/9\t2/9\t1/9\n\nThưc hiện lọc ảnh I với cửa sổ w thu được ảnh I' với kích thước bằng ảnh gốc. Tính toán tại các ô biên bỏ qua các ô ngoài ảnh.\nKhi đó giá trị I'(4,4) là:",
+    "answer": "16"
+  },
+  {
+    "question": "Cho ảnh đa cấp xám I(7x7) với ma trận cường độ sáng như sau:\n\n\n\n      2\t      2\t      2\t      2\t      2\t      2\t      2\n      2\t      2\t      2\t      2\t      2\t      2\t      2\n      2\t      2\t    15\t    15\t    15\t      2\t      2\n      2\t      2\t    14\t    18\t    16\t      2\t      2\n      2\t      2\t    15\t    15\t    15\t      2\t      2\n      2\t      2\t      2\t      2\t      2\t      2\t      2\n      2\t      2\t      2\t      2\t      2\t      2\t      2\n\nThực hiện phép cuộn toán tử L2 dưới đây trên ảnh để tính đạo hàm bậc 2 trên ảnh đã cho thu nhận ảnh G2. Giả thiết các ô khuyết thiếu được bỏ qua khi tính giá trị G2 tại biên.\nToán tử L2:\n\n      0\t     -1\t      0\n     -1\t      4\t     -1\n      0\t     -1\t      0\n\nKhi đó ảnh thu được có phần tử ở tâm ảnh là:",
+    "answer": "12"
+  },
+  {
+    "question": "Trung vị của dãy {14, 22, 34, 40, 45, 21, 1, 9, 25, 29, 19} là:",
+    "answer": "22"
+  },
+  {
+    "question": "Cho ảnh f(x,y) cùng các toán tử Laplace L và Gradient G. Cuộn bộ lọc dưới đây trên ảnh sẽ thực hiện biến đổi ảnh theo biểu thức:\n\n 0  -1    0\n\n\n-1   5   -1\n\n 0  -1    0",
+    "answer": "f(x,y)-Lf(x,y)"
+  },
+  {
+    "question": "Isodata4: Cho ảnh 10 cấp xám với ma trận cường độ sáng như sau:\n\n1 4 1 1 2 3 2 3\n\n3 2 4 2 5 2 6 2\n\n2 1 8 2 5 2 5 6\n\n2 5 2 4 7 9 1 4\n\n2 2 3 0 0 1 2 1\n\n1 5 7 1 2 4 5 6\n\n1 1 1 1 1 1 1 1\n\n0 0 0 0 0 0 0 0\n\nSử dụng ngưỡng khởi tạo t0=4.5 sai số epsi=0.001 và phương pháp Isodata, danh sách các ngưỡng tính được trong quá trình lặp và ngưỡng kết quả là:",
+    "answer": "3.8, 3.4 và 3"
+  },
+  {
+    "question": "Isodata3: Cho ảnh 10 cấp xám với ma trận cường độ sáng như sau:\n\n1 4 1 1 2 3 2 3\n\n3 2 4 2 5 2 6 2\n\n2 1 8 2 5 2 5 6\n\n2 5 2 4 7 9 1 4\n\n2 2 3 0 0 1 2 1\n\n1 5 7 1 2 4 5 6\n\nSử dụng ngưỡng khởi tạo t0=4.5 sai số epsi=0.001 và phương pháp Isodata, danh sách các ngưỡng tính được trong quá trình lặp và ngưỡng kết quả là:",
+    "answer": "4.2 và 4"
+  },
+  {
+    "question": "Cho ảnh 15 cấp xám (L=16) có lược đồ xám như sau:\n\n\n\nk\t0\t1\t2\t3\t4\t5\t6\t7\t8\t9\t10\t11\t12\t13\t14\t15\nnk\t5\t10\t15\t25\t16\t11\t6\t2\t1\t1\t1\t2\t4\t8\t3\t1\n\n(k là mức xám, nk là số pixel trên ảnh ứng với mức xám k)\n\nÁp dụng thuật toán tìm ngưỡng tự động Otsu thu được ngưỡng là:",
+    "answer": "7"
+  },
+  {
+    "question": "Cho ảnh 15 cấp xám (L=16) có lược đồ xám như sau:\n\n\n\nk\t0\t1\t2\t3\t4\t5\t6\t11\t12\t13\t14\t15\nnk\t5\t10\t15\t25\t16\t11\t6\t2\t4\t8\t3\t1\n\n(k là mức xám, nk là số pixel trên ảnh ứng với mức xám k)\n\nÁp dụng thuật toán tìm ngưỡng tự động Otsu thu được ngưỡng là:",
+    "answer": "8"
+  },
+  {
+    "question": "Otsu3: Cho ảnh 10 cấp xám với ma trận cường độ sáng như sau:\n\n1 4 1 1 2 3 2 3\n\n3 2 4 2 5 2 6 2\n\n2 1 8 2 5 2 5 6\n\n2 5 2 4 7 9 1 4\n\n2 2 3 0 0 1 2 1\n\n1 5 7 1 2 4 5 6\n\n1 1 1 1 1 1 1 1\n\n0 0 0 0 0 0 0 0\n\nCực đại bình phương phương sai và ngưỡng Otsu là:",
+    "answer": "3.60 và 3"
+  },
+  {
+    "question": "Xét quá trình lọc trung bình không gian. Nếu kích thước mặt nạ lọc tăng lên thì:",
+    "answer": "Mức độ làm \"trơn\" ảnh tăng lên"
+  },
+  {
+    "question": "Cho ảnh xám I(6x6) với ma trận cường độ sáng như sau:\n\n      1\t      2\t      1\t      3\t      2\t      1\n      4\t      4\t      3\t      2\t      4\t      0\n      6\t      9\t      2\t      3\t      2\t      1\n      6\t      2\t      0\t      5\t      3\t      0\n      3\t      4\t      0\t      5\t      1\t      5\n      5\t      6\t      8\t    9\t      3\t      6\n\n\n\n\nBiểu đồ tần xuất h' của ảnh I' với I'(x,y) = |I(x,y) - 4| là:",
+    "answer": "h'(0)=4; h'(1)=10; h'(2)=10;\n\nh'(3)=5; h'(4)=5; h'(5)=2;"
+  },
+  {
+    "question": "Isodata6: Cho ảnh 10 cấp xám với ma trận cường độ sáng như sau:\n\n9 9 9 9 9 9 9 9\n\n9 9 9 9 9 9 9 9\n\n6 6 6 6 6 6 6 6\n\n6 6 6 6 6 6 6 6\n\n3 3 3 3 3 3 3 3\n\n3 3 3 3 3 3 3 3\n\n0 0 0 0 0 0 0 0\n\n0 0 0 0 0 0 0 0\n\nSử dụng ngưỡng khởi tạo t0=4.5 sai số epsi=0.001 và phương pháp Isodata, danh sách các ngưỡng tính được trong quá trình lặp và ngưỡng kết quả là:",
+    "answer": "4.5 và 5"
+  },
+  {
+    "question": "Cho ảnh xám I(6x6) với ma trận cường độ sáng như sau:\n\n\n\n      1\t      2\t      1\t      3\t      2\t      1\n      4\t      4\t      3\t      2\t      4\t      0\n      6\t      9\t      2\t      3\t      2\t      1\n      6\t      2\t      0\t      5\t      3\t      0\n      3\t      4\t      0\t      5\t      0\t      5\n      5\t      6\t      8\t      9\t      3\t      6\n\n\n\nBiểu đồ tần xuất h của ảnh đã cho là:",
+    "answer": "h(0)=5; h(1)=4; h(2)=6;\n\nh(3)=6; h(4)=4; h(5)=4;\n\nh(6)=4; h(8)=1; h(9)=2;"
+  },
+  {
+    "question": "Cho ảnh xám I(6x6) với ma trận cường độ sáng như sau:\n\n\n\n      1\t      2\t      1\t      3\t      2\t      1\n      4\t      4\t      3\t      2\t      4\t      0\n      6\t      9\t      2\t      3\t      2\t      1\n      6\t      2\t      0\t      5\t      3\t      0\n      3\t      4\t      0\t      5\t      1\t      5\n      5\t      6\t      8\t      9\t      3\t      6\n\n\n\nBiểu đồ tần xuất hsm đã làm trơn với W=5 của ảnh đã cho tại các mức xám 3, 4, 5 là:",
+    "answer": "hsm(3)=5; hsm(4)=5; hsm(5)=4"
+  },
+  {
+    "question": "Bộ lọc trung vị được sử dụng để:",
+    "answer": "Lọc nhiễu xung"
+  },
+  {
+    "question": "Cho ảnh đa cấp xám I(ij) với i,j=0..6 có ma trận cường độ sáng như sau:\n\n\n\n      2\t      2\t      2\t      2\t      2\t      2\t      2\n      2\t      2\t      2\t      2\t      2\t      2\t      2\n      2\t      2\t    15\t    15\t    15\t      2\t      2\n      2\t      2\t    13\t    12\t    16\t      2\t      2\n      2\t      2\t    15\t    15\t    15\t      2\t      2\n      2\t      2\t      2\t      2\t      2\t      2\t      2\n      2\t      2\t      2\t      2\t      2\t      2\t      1\n\nThực hiện phép cuộn các toán tử Prewitt Px và Py dưới đây trên ảnh I để thu được các ảnh đạo hàm Gx và Gy. Giả thiết các toán tử không thực hiện với các ô khuyết thiếu khi tính toán cho các giá trị biên. Các ảnh Gx và Gy có cùng kích cỡ và cách đánh chỉ số với ảnh I\nToán tử Px:\n\n     -1\t      0\t      1\n     -1\t      0\t      1\n     -1\t      0\t      1\n\nToán tử Py:\n\n     -1\t     -1\t     -1\n      0\t      0\t      0\n      1\t      1\t      1\n\nGiá trị tại vị trí (3,3) trên các ảnh Gx và Gy thu được là:",
+    "answer": "3 và 0"
+  },
+  {
+    "question": "Cho ảnh đa cấp xám I(ij) với i,j=0..6 có ma trận cường độ sáng như sau:\n\n\n\n      2\t      2\t      2\t      2\t      2\t      2\t      2\n      2\t      2\t      2\t      2\t      2\t      2\t      2\n      2\t      2\t    15\t    15\t    15\t      2\t      2\n      2\t      2\t    13\t    12\t    16\t      2\t      2\n      2\t      2\t    15\t    15\t    15\t      2\t      2\n      2\t      2\t      2\t      2\t      2\t      2\t      2\n      2\t      2\t      2\t      2\t      2\t      2\t      2\n\nThực hiện phép cuộn các toán tử Sobel Sx và Sy dưới đây với ảnh I để thu được các ảnh đạo hàm Gx và Gy.\nGiả thiết bỏ qua các ô khuyết thiếu khi tính toán cho các ô ở biên. Gx và Gy có cùng kích cỡ và cách đánh chỉ số với ảnh I.\nToán tử Sx:\n\n     -1\t      0\t      1\n     -2\t      0\t      2\n     -1\t      0\t      1\n\nToán tử Sy:\n\n     -1\t     -2\t     -1\n      0\t      0\t      0\n      1\t      2\t      1\n\nGiá trị tại vị trí (2,2) trên các ảnh Gx và Gy thu được là:",
+    "answer": "36 và 32"
+  },
+  {
+    "question": "Cho ảnh xám I(6x6) với ma trận cường độ sáng như sau:\n\n\n\n      1\t      2\t      1\t      3\t      2\t      1\n      4\t      7\t      3\t      2\t      4\t      0\n      6\t      9\t      2\t      3\t      2\t      1\n      6\t      2\t      0\t      5\t      3\t      0\n      3\t      4\t      0\t      5\t      0\t      5\n      5\t      6\t      8\t      9\t      3\t      6\n\n\n\nBiểu đồ tần xuất h của ảnh đã cho là:",
+    "answer": "h(0)=5; h(1)=4; h(2)=6;\n\nh(3)=6; h(4)=3; h(5)=4;\n\nh(6)=4; h(7)=1; h(8)=1;\n\nh(9)=2;"
+  },
+  {
+    "question": "Cho ảnh 256 cấp xám I(3x5) với ma trận cường độ sáng như sau:\n\n          1\t        23\t      156\t      22\t        45\n      133\t        13\t        12\t      12\t      212\n        12\t      232\t      127\t      32\t        21\n\n\n\n\nCho các mức xám phân bố từ 0 đến 255 và ngưỡng là 127.\n\nKết quả ảnh phân ngưỡng sử dụng khuếch tán lỗi 1 chiều là:",
+    "answer": "0\t          0\t      255\t        0\t          0\n      255\t          0\t          0\t        0\t      255\n          0\t      255\t          0\t    255\t          0"
+  },
+  {
+    "question": "Cho ảnh 15 cấp xám (L=16) có lược đồ xám như sau:\n\n\n\nk\t0\t1\t2\t3\t4\t5\t6\t7\t11\t12\t13\t14\t15\nnk\t5\t10\t15\t25\t16\t11\t6\t2\t2\t4\t8\t3\t1\n\n(k là mức xám, nk là số pixel trên ảnh ứng với mức xám k).\n\nÁp dụng thuật toán tìm ngưỡng tự động Otsu thu được ngưỡng là:",
+    "answer": "9"
+  },
+  {
+    "question": "Cho ảnh 10 cấp xám I(6x8) với ma trận cường độ sáng như sau:\n\n\n\n      1\t      4\t      1\t      1\t      2\t      3\t      2\t      3\n      3\t      2\t      3\t      2\t      5\t      2\t      6\t      2\n      2\t      3\t      8\t      2\t      3\t      2\t      5\t      6\n      4\t      5\t      2\t      4\t      2\t      9\t      1\t      4\n      2\t      4\t      3\t      2\t      0\t      1\t      2\t      1\n      3\t      5\t      7\t      1\t      2\t      4\t      5\t      6\n\n\nÁp dụng thuật toán tìm ngưỡng tự động Otsu thu được ngưỡng tự động là:",
+    "answer": "3"
+  },
+  {
+    "question": "Cho ảnh đa cấp xám I(ij) với i,j=0..6 có ma trận cường độ sáng như sau:\n\n\n\n      2\t      2\t      2\t      2\t      2\t      2\t      2\n      2\t      2\t      2\t      2\t      2\t      2\t      2\n      2\t      2\t    15\t    15\t    15\t      2\t      2\n      2\t      2\t    14\t    12\t    16\t      2\t      2\n      2\t      2\t    15\t    15\t    15\t      2\t      2\n      2\t      2\t      2\t      2\t      2\t      2\t      2\n      2\t      2\t      2\t      2\t      2\t      2\t      2\n\nThực hiện phép cuộn toán tử L2 dưới đây trên ảnh để tính đạo hàm bậc 2 với ảnh đã cho thu nhận ảnh biên G2(i,j) với i,j=0..6. Giả thiết các ô khuyết thiếu được bỏ qua khi tính giá trị G2 tại biên. Ảnh G2 có cùng kích cỡ với ảnh gốc.\nToán tử L2:\n\n      0\t     -1\t      0\n     -1\t      4\t     -1\n      0\t     -1\t      0\n\nGiá trị thu được tại vị trí (2,2) trên ảnh G2 là:",
+    "answer": "27"
+  },
+  {
+    "question": "Cho ảnh 15 cấp xám (L=16) có lược đồ xám như sau:\n\n\n\nk\t0\t1\t2\t3\t4\t5\t6\t7\t8\t9\t10\t11\t12\t13\t14\t15\nnk\t1\t3\t8\t4\t2\t1\t1\t1\t2\t6\t11\t16\t25\t15\t10\t5\n\n(k là mức xám, nk là số pixel trên ảnh ứng với mức xám k)\n\nÁp dụng thuật toán đẳng liệu isodata thu được ngưỡng là:",
+    "answer": "7"
+  },
+  {
+    "question": "Isodata5: Cho ảnh 10 cấp xám với ma trận cường độ sáng như sau:\n\n9 9 9 9 9 9 9 9\n\n8 8 8 8 8 8 8 8\n\n8 8 8 8 8 8 8 8\n\n7 7 7 7 7 7 7 7\n\n2 2 2 2 2 2 2 2\n\n1 1 1 1 1 1 1 1\n\n1 1 1 1 1 1 1 1\n\n0 0 0 0 0 0 0 0\n\nSử dụng ngưỡng khởi tạo t0=4.5 sai số epsi=0.001 và phương pháp Isodata, danh sách các ngưỡng tính được trong quá trình lặp và ngưỡng kết quả là:",
+    "answer": "4.5 và 5"
+  },
+  {
+    "question": "Isodata1: Cho ảnh 10 cấp xám với ma trận cường độ sáng như sau:\n\n1 4 1 1 2 3 2 3\n\n3 2 4 2 5 2 6 2\n\n2 1 8 2 5 2 5 6\n\n2 5 2 4 7 9 1 4\n\n2 2 3 0 0 1 2 1\n\n1 5 7 1 2 4 5 6\n\n1 1 1 1 1 1 1 1\n\n0 0 0 0 0 0 0 0\n\nSử dụng ngưỡng khởi tạo t0=4.5 sai số epsi=0.001 và phương pháp Isodata, danh sách các ngưỡng tính được trong quá trình lặp và ngưỡng kết quả là:",
+    "answer": "3.8, 3.4 và 3"
+  },
+  {
+    "question": "Cho ảnh xám I(6x6) với ma trận cường độ sáng như sau:\n\n      1\t      2\t      1\t      3\t      2\t      1\n      4\t      4\t      3\t      2\t      4\t      0\n      6\t      9\t      2\t      3\t      2\t      1\n      6\t      2\t      0\t      5\t      3\t      0\n      3\t      4\t      0\t      5\t      1\t      5\n      5\t      6\t      8\t    10\t      3\t      6\n\n\n\n\nBiểu đồ tần xuất h' của ảnh I' với I'(x,y) = |I(x,y) - 5| là:",
+    "answer": "h'(0)=4; h'(1)=8; h'(2)=6;\n\nh'(3)=7; h'(4)=6; h'(5)=5;\n\nh'(6)=0;"
+  },
+  {
+    "question": "Cho ảnh xám I(6x6) với ma trận cường độ sáng như sau:\n\n\n\n      1\t      2\t      1\t      3\t      2\t      1\n      8\t      4\t      3\t      2\t      4\t      0\n      6\t      9\t      2\t      3\t      2\t      1\n      6\t      2\t      0\t      5\t      3\t      0\n      3\t      4\t      0\t      5\t      0\t      5\n      5\t      6\t      8\t      9\t      3\t      6\n\n\n\nBiểu đồ tần xuất hsm đã làm trơn với W=3 của ảnh I tại các mức xám 1, 2, 3 là:",
+    "answer": "hsm(1)=5; hsm(2)=5; hsm(3)=5"
+  },
+  {
+    "question": "Cho ảnh 6 cấp xám I(ij) với i,j=0..5 có ma trận cường độ sáng như sau:\n\n      3\t      4\t      1\t      1\t      4\t      3\n      3\t      4\t      4\t      5\t      0\t      4\n      4\t      4\t      3\t      4\t      5\t      4\n      1\t      4\t      5\t      4\t      0\t      2\n      3\t      4\t      5\t      4\t      5\t      4\n      2\t      4\t      3\t      4\t      2\t      3\n\n\n\n\nẢnh I'(ij) với i,j=0..5 cùng có 6 cấp xám là ảnh đã được cân bằng tần suất của ảnh I(ij).\n\nGiá trị I'(1,1) là:",
+    "answer": "4"
+  },
+  {
+    "question": "Otsu5: Cho ảnh 10 cấp xám với ma trận cường độ sáng như sau:\n\n9 9 9 9 9 9 9 9\n\n9 9 9 9 9 9 9 9\n\n6 6 6 6 6 6 6 6\n\n6 6 6 6 6 6 6 6\n\n3 3 3 3 3 3 3 3\n\n3 3 3 3 3 3 3 3\n\n0 0 0 0 0 0 0 0\n\n0 0 0 0 0 0 0 0\n\nCực đại bình phương phương sai và ngưỡng Otsu là:",
+    "answer": "6.75 và 4"
+  },
+  {
+    "question": "Otsu6: Cho ảnh 10 cấp xám với ma trận cường độ sáng như sau:\n\n9 9 9 9 9 9 9 9\n\n9 9 9 9 9 9 9 9\n\n9 9 9 9 9 9 9 9\n\n9 9 9 9 9 9 9 9\n\n6 6 6 6 6 6 6 6\n\n6 6 6 6 6 6 6 6\n\n6 6 6 6 6 6 6 6\n\n6 6 6 6 6 6 6 6\n\nCực đại bình phương phương sai và ngưỡng Otsu là:",
+    "answer": "2.25 và 7"
+  },
+  {
+    "question": "Cho ảnh xám I(6x6) với ma trận cường độ sáng như sau:\n\n\n\n      1\t      2\t      1\t      3\t      2\t      1\n      4\t      4\t      3\t      2\t      4\t      0\n      6\t      9\t      2\t      3\t      2\t      1\n      6\t      2\t      0\t      5\t      3\t      0\n      3\t      4\t      0\t      5\t      0\t      5\n      5\t      6\t      8\t      9\t      3\t      6\n\n\n\nBiểu đồ tần xuất hsm đã làm trơn với W=3 của ảnh đã cho tại các mức xám 3, 4, 5 là:",
+    "answer": "hsm(3)=5; hsm(4)=5; hsm(5)=4"
+  },
+  {
+    "question": "Otsu2: Cho ảnh 10 cấp xám với ma trận cường độ sáng như sau:\n\n1 4 1 1 2 3 2 3\n\n3 2 4 2 5 2 6 2\n\n2 1 8 2 5 2 5 6\n\n2 5 2 4 7 9 1 4\n\n2 2 3 0 0 1 2 1\n\n1 5 7 1 2 4 5 6\n\nCực đại bình phương phương sai và ngưỡng Otsu là:",
+    "answer": "3.38 và 3"
+  },
+  {
+    "question": "Cho ảnh 15 cấp xám (L=16) có lược đồ xám như sau:\n\n\n\nk\t0\t1\t2\t3\t4\t5\t6\t7\t8\t9\t10\t11\t12\t13\t14\t15\nnk\t1\t3\t8\t4\t2\t1\t1\t1\t2\t6\t11\t16\t25\t15\t10\t5\n\n(k là mức xám, nk là số pixel trên ảnh ứng với mức xám k)\n\nÁp dụng thuật toán đối xứng nền, với p%=95.5%, thu được ngưỡng là:",
+    "answer": "Trong số các đáp án còn lại không có đáp án nào đúng"
+  },
+  {
+    "question": "Cho ảnh 6 cấp xám I(ij) với i,j=0..5 có ma trận cường độ sáng như sau:\n\n      3\t      1\t      4\t      4\t      2\t      3\n      3\t      2\t      2\t      0\t      5\t      1\n      1\t      2\t      3\t      1\t      0\t      1\n      4\t      1\t      0\t      2\t      4\t      4\n      3\t      1\t      0\t      1\t      0\t      1\n      2\t      1\t      3\t      2\t      1\t      3\n\n\n\n\nẢnh I'(ij) với i,j=0..5 cùng có 6 cấp xám là ảnh đã được cân bằng tần suất của ảnh I(ij).\n\nGiá trị I'(3,3) là:",
+    "answer": "3"
+  },
+  {
+    "question": "Cho ảnh 256 cấp xám I(3x5) với ma trận cường độ sáng như sau:\n\n          1\t        23\t      156\t      222\t        45\n      133\t        13\t        12\t      212\t      212\n        12\t      232\t      127\t      232\t        21\n\n\n\n\nCho các mức xám phân bố từ 0 đến 255 và ngưỡng là 127.\n\nKết quả ảnh phân ngưỡng sử dụng khuếch tán lỗi 1 chiều là:",
+    "answer": "0\t          0\t      255\t    255\t          0\n      255\t          0\t          0\t        0\t      255\n          0\t      255\t          0\t    255\t          0"
+  },
+  {
+    "question": "Cho ảnh 6 cấp xám I(ij) với i,j=0..5 có ma trận cường độ sáng như sau:\n\n      3\t      4\t      1\t      1\t      4\t      3\n      3\t      4\t      4\t      5\t      0\t      4\n      4\t      4\t      3\t      4\t      5\t      4\n      1\t      4\t      5\t      4\t      0\t      2\n      3\t      4\t      5\t      4\t      5\t      4\n      2\t      4\t      3\t      4\t      2\t      3\n\n\n\n\nẢnh I'(ij) với i,j=0..5 cùng có 6 cấp xám và là ảnh đã được cân bằng tần suất của ảnh I(ij).\n\nGiá trị I'(4,4) là:",
+    "answer": "Trong số các đáp án còn lại không có đáp án nào đúng"
+  },
+  {
+    "question": "Bộ lọc dưới đây được sử dụng để làm nổi các đường biên:\n\n 0   1    2\n\n\n-1   0    1\n\n-2 -1    0",
+    "answer": "tạo góc 1350 với đường nằm ngang"
+  },
+  {
+    "question": "Bộ lọc trung vị là:",
+    "answer": "Bộ lọc phi tuyến"
+  },
+  {
+    "question": "Cho ảnh f(x,y) cùng các toán tử Laplace L (L sử dụng bộ lọc như ở dưới) và Gradient G. Phép toán nào dưới đây làm tăng độ sắc nét của ảnh:\n\n 0  1   0\n\n\n 1 -4   1\n\n 0  1   0",
+    "answer": "f(x,y)-Lf(x,y)"
+  },
+  {
+    "question": "Otsu4: Cho ảnh 10 cấp xám với ma trận cường độ sáng như sau:\n\n9 9 9 9 9 9 9 9\n\n8 8 8 8 8 8 8 8\n\n8 8 8 8 8 8 8 8\n\n7 7 7 7 7 7 7 7\n\n2 2 2 2 2 2 2 2\n\n1 1 1 1 1 1 1 1\n\n1 1 1 1 1 1 1 1\n\n0 0 0 0 0 0 0 0\n\nCực đại bình phương phương sai và ngưỡng Otsu là:",
+    "answer": "12.25 và 4"
+  },
+  {
+    "question": "Cho ảnh I(i,j) với i,j=0..8 như sau:\n\n1\t2\t3\t4\t5\t6\t7\t8\t9\n2\t3\t4\t5\t6\t7\t8\t9\t10\n3\t4\t5\t6\t7\t8\t9\t10\t11\n4\t5\t6\t7\t8\t9\t10\t11\t12\n5\t6\t7\t8\t9\t10\t11\t12\t13\n6\t7\t8\t9\t10\t11\t12\t13\t14\n7\t8\t9\t10\t11\t12\t13\t14\t15\n8\t9\t10\t11\t12\t13\t14\t15\t16\n9\t10\t11\t12\t13\t14\t15\t16\t17\n\nvà cửa sổ lọc w(i,j) với i,j=0..2 là bộ lọc trung vị median filter.\n\nThưc hiện lọc ảnh I với cửa sổ w thu được ảnh I' với kích thước bằng ảnh gốc. Tính toán tại các ô biên bỏ qua các ô ngoài ảnh.\nKhi đó giá trị I'(5,5) là:",
+    "answer": "11"
+  },
+  {
+    "question": "Isodata8: Cho ảnh 10 cấp xám với ma trận cường độ sáng như sau:\n\n6 6 6 6 6 6 6 6\n\n6 6 6 6 6 6 6 6\n\n6 6 6 6 6 6 6 6\n\n6 6 6 6 6 6 6 6\n\n0 0 0 0 0 0 0 0\n\n0 0 0 0 0 0 0 0\n\n0 0 0 0 0 0 0 0\n\n0 0 0 0 0 0 0 0\n\nSử dụng ngưỡng khởi tạo t0=4.5 sai số epsi=0.001 và phương pháp Isodata, danh sách các ngưỡng tính được trong quá trình lặp và ngưỡng kết quả là:",
+    "answer": "3 và 3"
+  },
+  {
+    "question": "Cho ảnh đa cấp xám I(ij) với i,j=0..6 có ma trận cường độ sáng như sau:\n\n\n\n      2\t      2\t      2\t      2\t      2\t      2\t      2\n      2\t      2\t      2\t      2\t      2\t      2\t      2\n      2\t      2\t    15\t    15\t    15\t      2\t      2\n      2\t      2\t    13\t    12\t    16\t      2\t      2\n      2\t      2\t    15\t    15\t    15\t      2\t      2\n      2\t      2\t      2\t      2\t      2\t      2\t      2\n      2\t      2\t      2\t      2\t      2\t      2\t      2\n\nThực hiện phép cuộn toán tử L2 dưới đây trên ảnh để tính đạo hàm bậc 2 trên ảnh đã cho thu nhận ảnh G2.\nGiả thiết các ô khuyết thiếu được bỏ qua khi tính giá trị G2 tại biên. Ảnh G2 có cùng kích thước và cách đánh chỉ số với ảnh gốc I(ij).\nToán tử L2:\n\n      0\t     -1\t      0\n     -1\t      4\t     -1\n      0\t     -1\t      0\n\nGiá trị tại vị trí (3,3) trên ảnh G2 là:",
+    "answer": "-11"
+  },
+  {
+    "question": "Otsu7: Cho ảnh 10 cấp xám với ma trận cường độ sáng như sau:\n\n6 6 6 6 6 6 6 6\n\n6 6 6 6 6 6 6 6\n\n6 6 6 6 6 6 6 6\n\n6 6 6 6 6 6 6 6\n\n0 0 0 0 0 0 0 0\n\n0 0 0 0 0 0 0 0\n\n0 0 0 0 0 0 0 0\n\n0 0 0 0 0 0 0 0\n\nCực đại bình phương phương sai và ngưỡng Otsu là:",
+    "answer": "9 và 3"
+  },
+  {
+    "question": "Xác suất xuất hiện các mức xám trong ảnh đã được cân bằng histogram sẽ có tính chất:",
+    "answer": "Đồng đều cho tất cả các mức xám"
+  },
+  {
+    "question": "Cho ảnh 15 cấp xám (L=16) có lược đồ xám như sau:\n\n\n\nk\t0\t1\t2\t3\t4\t9\t10\t11\t12\t13\t14\t15\nnk\t1\t3\t8\t4\t2\t6\t11\t16\t25\t15\t10\t5\n\n(k là mức xám, nk là số pixel trên ảnh ứng với mức xám k)\n\nÁp dụng thuật toán đối xứng nền, với mức p%=95%, ngưỡng tìm được là:",
+    "answer": "10"
+  },
+  {
+    "question": "Otsu1: Cho ảnh 6 cấp xám với ma trận cường độ sáng như sau:\n\n0 1 2 3 4 5\n\n0 0 1 2 3 4\n\n0 0 0 1 2 3\n\n0 0 0 0 1 2\n\n0 0 0 0 0 1\n\nCực đại bình phương phương sai và ngưỡng Otsu là:",
+    "answer": "1.68 và 1"
+  },
+  {
+    "question": "Cho ảnh xám I(6x6) với ma trận cường độ sáng như sau:\n\n\n\n      1\t      2\t      6\t      3\t      9\t      1\n      4\t      4\t      3\t      2\t      4\t      0\n      6\t      7\t      2\t      3\t      2\t      1\n      6\t      2\t      0\t      5\t      3\t      0\n      3\t      4\t      0\t      5\t      1\t      5\n      5\t      6\t      8\t      9\t      3\t      6\n\n\n\nBiểu đồ tần xuất hsm đã làm trơn với W=5 của ảnh đã cho tại các mức xám 2, 3, 4 là:",
+    "answer": "hsm(2)=5; hsm(3)=5; hsm(4)=5"
+  }
+];
+
+function copyTextToClipboard(text) {
+    navigator.clipboard.writeText(text)
+        .then(function () {
+            console.log('Text copied to clipboard');
+        })
+        .catch(function (err) {
+            console.error('Failed to copy text: ', err);
+        });
+}
+
+(function() {
+    'use strict';
+
+    var questionEl = document.querySelector('.formulation');
+    var question = questionEl.querySelector('.qtext').innerText.trim();
+
+    for (let i = 0; i < questionAnswerPairs.length; i++) {
+        if (questionAnswerPairs[i].question === question) {
+            var selections = questionEl.querySelectorAll('.r0, .r1');
+            for (let selection of selections) {
+                const inputElement = selection.querySelector('input[type="radio"]');
+                if (selection.querySelector('.flex-fill').innerText.trim() === questionAnswerPairs[i].answer) {
+                    inputElement.checked = true;
+                }
+            }
+            break;
+        }
+        else {
+            console.error(question);
+        }
+    }
+
+    var nextButton = document.querySelector('input[value="Next page"]');
+    if (nextButton) {
+        nextButton.click(); // Kích hoạt nút "Next page"
+    }
+})();

@@ -1,0 +1,1 @@
+{"name":"Local: boolean","url":"c:\\Users\\ACER\\OneDrive\\Documents\\BaiTapCPP\\boolean.cpp","tests":[{"id":1708348241905,"input":"not not False","output":""},{"id":1708348535867,"input":"","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"c:\\Users\\ACER\\OneDrive\\Documents\\BaiTapCPP\\boolean.cpp","group":"local","local":true}
